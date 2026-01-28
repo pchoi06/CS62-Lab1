@@ -61,7 +61,17 @@ public class TextCoinStrip {
      * @return the string representation
      */
     public String toString() {
-        // TODO: fill this
+        String result = "";
+        
+        for (int i = 0; i < theStrip.size(); i++) {
+            if (theStrip.get(i)) {
+                result += "o"; 
+            } else {
+                result += "_";
+            }
+        }
+        
+        return result;
     }
 
     /**
@@ -72,8 +82,26 @@ public class TextCoinStrip {
      * @return true if the move is legal
      */
     public boolean isLegalMove(int start, int distance) {
-        // TODO: implement this method
-        return false;
+        if (start < 0 || start >= theStrip.size() || distance <= 0) {
+            return false;
+        }
+
+        if (!theStrip.get(start)) {
+            return false;
+        }
+
+        int destination = start - distance;
+        if (destination < 0) {
+            return false;
+        }
+
+        for (int i = start - 1; i >= destination; i--) {
+            if (theStrip.get(i)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**
@@ -83,8 +111,8 @@ public class TextCoinStrip {
      * @param distance how far the coin is to move pre-condition: the move must be a legal one
      */
     public void makeMove(int start, int distance) {
-        // TODO: implement this method
-
+        theStrip.set(start, false);
+        theStrip.set(start - distance, true);
     }
 
     /**
@@ -93,7 +121,12 @@ public class TextCoinStrip {
      * @return true if there are no more moves
      */
     public boolean gameIsOver() {
-        return false; // TODO: replace this with real code
+        for (int i = 0; i < numCoins; i++) {
+            if(!theStrip.get(i)){
+                return false;
+        }
+        }
+    return true;    
     }
 
     /**
